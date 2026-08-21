@@ -6,8 +6,8 @@ import urllib.error
 st.set_page_config(page_title="Yapay Zeka Asistanım", page_icon="🤖")
 st.title("🤖 Benim Yapay Zeka Asistanım")
 
-API_KEY = "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"
-URL = "https://openrouter.ai/api/v1/chat/completions"
+API_KEY = "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"
+URL = "https://api-inference.huggingface.co/v1/chat/completions"
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -26,15 +26,14 @@ if prompt := st.chat_input("Yapay zekaya bir şeyler yaz..."):
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {API_KEY}",
-        "HTTP-Referer": "https://streamlit.app",
-        "X-Title": "Benim Yapay Zeka Asistanim",
         "User-Agent": "Mozilla/5.0"
     }
     
-    # OpenRouter güncel Llama 3.1 ücretsiz modeli
+    # Hugging Face Llama 3 modeli
     data = {
-        "model": "meta-llama/llama-3.1-8b-instruct:free",
-        "messages": messages
+        "model": "meta-llama/Meta-Llama-3-8B-Instruct",
+        "messages": messages,
+        "max_tokens": 500
     }
     
     req = urllib.request.Request(URL, data=json.dumps(data).encode("utf-8"), headers=headers)
