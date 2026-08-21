@@ -29,8 +29,9 @@ if prompt := st.chat_input("Yapay zekaya bir şeyler yaz..."):
         "User-Agent": "Mozilla/5.0"
     }
     
+    # Güncel ve aktif model
     data = {
-        "model": "llama3-8b-8192",
+        "model": "llama-3.1-8b-instant",
         "messages": messages
     }
     
