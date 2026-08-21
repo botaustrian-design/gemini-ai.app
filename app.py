@@ -29,9 +29,9 @@ if prompt := st.chat_input("Yapay zekaya bir şeyler yaz..."):
         "User-Agent": "Mozilla/5.0"
     }
     
-    # En stabil ve sorunsuz çalışan model
+    # Kesinlikle aktif olan Gemma 2 modeli
     data = {
-        "model": "mixtral-8x7b-32768",
+        "model": "gemma2-9b-it",
         "messages": messages
     }
     
