@@ -31,9 +31,9 @@ if prompt := st.chat_input("Yapay zekaya bir şeyler yaz..."):
         "User-Agent": "Mozilla/5.0"
     }
     
-    # OpenRouter'ın en sağlam ve her zaman açık ücretsiz modeli
+    # OpenRouter güncel Llama 3.1 ücretsiz modeli
     data = {
-        "model": "meta-llama/llama-3-8b-instruct:free",
+        "model": "meta-llama/llama-3.1-8b-instruct:free",
         "messages": messages
     }
     
