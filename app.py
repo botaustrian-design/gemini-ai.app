@@ -6,8 +6,8 @@ import urllib.error
 st.set_page_config(page_title="Yapay Zeka Asistanım", page_icon="🤖")
 st.title("🤖 Benim Yapay Zeka Asistanım")
 
-API_KEY = "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"
-URL = "https://api.groq.com/openai/v1/chat/completions"
+API_KEY = "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"
+URL = "https://openrouter.ai/api/v1/chat/completions"
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -26,12 +26,14 @@ if prompt := st.chat_input("Yapay zekaya bir şeyler yaz..."):
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {API_KEY}",
+        "HTTP-Referer": "https://streamlit.app",
+        "X-Title": "Benim Yapay Zeka Asistanim",
         "User-Agent": "Mozilla/5.0"
     }
     
-    # Kesinlikle aktif olan Gemma 2 modeli
+    # OpenRouter üzerinden çalışan stabil ve ücretsiz model
     data = {
-        "model": "gemma2-9b-it",
+        "model": "google/gemma-2-9b-it:free",
         "messages": messages
     }
     
