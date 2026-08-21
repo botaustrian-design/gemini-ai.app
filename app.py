@@ -31,9 +31,9 @@ if prompt := st.chat_input("Yapay zekaya bir şeyler yaz..."):
         "User-Agent": "Mozilla/5.0"
     }
     
-    # OpenRouter üzerinden çalışan stabil ve ücretsiz model
+    # OpenRouter'ın en sağlam ve her zaman açık ücretsiz modeli
     data = {
-        "model": "google/gemma-2-9b-it:free",
+        "model": "meta-llama/llama-3-8b-instruct:free",
         "messages": messages
     }
     
