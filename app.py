@@ -1,6 +1,7 @@
 import streamlit as st
 import urllib.request
 import json
+import urllib.error
 
 st.set_page_config(page_title="Yapay Zeka Asistanım", page_icon="🤖")
 st.title("🤖 Benim Yapay Zeka Asistanım")
@@ -28,9 +29,8 @@ if prompt := st.chat_input("Yapay zekaya bir şeyler yaz..."):
         "User-Agent": "Mozilla/5.0"
     }
     
-    # En stabil çalışan ana model
     data = {
-        "model": "llama-3.1-8b-instant",
+        "model": "llama3-8b-8192",
         "messages": messages
     }
     
@@ -44,6 +44,9 @@ if prompt := st.chat_input("Yapay zekaya bir şeyler yaz..."):
             st.session_state.messages.append({"role": "assistant", "content": bot_reply})
             with st.chat_message("assistant"):
                 st.markdown(bot_reply)
+    except urllib.error.HTTPError as e:
+        error_detail = e.read().decode("utf-8")
+        st.error(f"HTTP Hatası {e.code}: {error_detail}")
     except Exception as e:
         st.error(f"Hata oluştu: {e}")
         
