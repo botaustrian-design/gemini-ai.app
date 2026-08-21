@@ -29,9 +29,9 @@ if prompt := st.chat_input("Yapay zekaya bir şeyler yaz..."):
         "User-Agent": "Mozilla/5.0"
     }
     
-    # En güçlü ve ana Groq modeli
+    # En stabil ve sorunsuz çalışan model
     data = {
-        "model": "llama-3.3-70b-versatile",
+        "model": "mixtral-8x7b-32768",
         "messages": messages
     }
     
