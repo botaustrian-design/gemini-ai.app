@@ -8,15 +8,10 @@ st.set_page_config(page_title="Yapay Zeka Asistanım", page_icon="🤖", layout=
 st.title("🤖 Benim Yapay Zeka Asistanım")
 st.write("Bu uygulama, herkesin internet üzerinden erişip sohbet edebileceği yapay zeka merkezidir.")
 
-# API Anahtarını Streamlit'in güvenli kasasından çekiyoruz
-# (Bunu daha sonra Streamlit ayarlarında tanımlayacağız)
-try:
-    API_KEY = st.secrets["GEMINI_API_KEY"]
-except:
-    # Yerel testler için yedek anahtar (Buraya kendi anahtarını yapıştırabilirsin)
-    API_KEY = "AQ.Ab8RN6LmnajcNvr-Vfon4rGRamitfQnCALsoB6ZU3ethS_j_Dw"
+# API Şifreni koda ekledik
+API_KEY = "AQ.Ab8RN6LwOiChGgOcYznWupYYzxQyJkI0wqxp3ABwdObsHABF1A"
 
-URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key={API_KEY}"
+URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={API_KEY}"
 
 # Sohbet Hafızası
 if "messages" not in st.session_state:
@@ -56,4 +51,4 @@ if prompt := st.chat_input("Yapay zekaya bir şeyler yaz..."):
                 st.markdown(bot_reply)
     except Exception as e:
         st.error(f"Bir hata oluştu: {e}")
-      
+        
