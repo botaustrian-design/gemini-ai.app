@@ -22,15 +22,15 @@ if prompt := st.chat_input("Yapay zekaya bir şeyler yaz..."):
 
     messages = [{"role": m["role"], "content": m["content"]} for m in st.session_state.messages]
     
-    # Güvenlik duvarını aşmak için User-Agent eklendi
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {API_KEY}",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+        "User-Agent": "Mozilla/5.0"
     }
     
+    # En stabil çalışan ana model
     data = {
-        "model": "llama-3.3-70b-versatile",
+        "model": "llama-3.1-8b-instant",
         "messages": messages
     }
     
