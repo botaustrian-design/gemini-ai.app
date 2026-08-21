@@ -5,7 +5,7 @@ import json
 st.set_page_config(page_title="Yapay Zeka Asistanım", page_icon="🤖")
 st.title("🤖 Benim Yapay Zeka Asistanım")
 
-API_KEY = "Gsk_vldacf84wfuN97TvLgdFWGdyb3FYRhKpgQZc0B9u5hBXfcwVRMrF"
+API_KEY = "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"
 URL = "https://api.groq.com/openai/v1/chat/completions"
 
 if "messages" not in st.session_state:
