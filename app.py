@@ -6,8 +6,9 @@ import urllib.error
 st.set_page_config(page_title="Yapay Zeka Asistanım", page_icon="🤖")
 st.title("🤖 Benim Yapay Zeka Asistanım")
 
+# 'h' harfi küçük olarak düzeltildi
 API_KEY = "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"
-URL = "https://api-inference.huggingface.co/v1/chat/completions"
+URL = "https://router.huggingface.co/v1/chat/completions"
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -29,7 +30,6 @@ if prompt := st.chat_input("Yapay zekaya bir şeyler yaz..."):
         "User-Agent": "Mozilla/5.0"
     }
     
-    # Hugging Face Llama 3 modeli
     data = {
         "model": "meta-llama/Meta-Llama-3-8B-Instruct",
         "messages": messages,
