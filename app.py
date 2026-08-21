@@ -5,10 +5,10 @@ import json
 st.set_page_config(page_title="Yapay Zeka Asistanım", page_icon="🤖")
 st.title("🤖 Benim Yapay Zeka Asistanım")
 
-# Videodaki token'ını buraya ekledik
-TOKEN = "AQ.Ab8RN6LwOiChGgOcYznWupYYzxQyJkI0wqxp3ABwdObsHABF1A"
+# Senin yeni ve güncel anahtarın
+API_KEY = "AQ.Ab8RN6KCwUNe4iaTrz6kY_YgBxxhsSOuVFWFLFDsoRRjDMwmxQ"
 
-# AQ token'ları için URL'de ?key= KULLANILMAZ
+# URL'den ?key= kısmını tamamen kaldırdık
 URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
 
 if "messages" not in st.session_state:
@@ -25,10 +25,10 @@ if prompt := st.chat_input("Yapay zekaya bir şeyler yaz..."):
 
     contents = [{"role": "user" if m["role"] == "user" else "model", "parts": [{"text": m["content"]}]} for m in st.session_state.messages]
     
-    # AQ token'ları için en önemli kısım: Authorization Bearer header'ı
+    # İŞTE SİHİRLİ KISIM: Anahtarı Google'ın özel başlığı ile gönderiyoruz
     headers = {
         "Content-Type": "application/json",
-        "Authorization": f"Bearer {TOKEN}"
+        "x-goog-api-key": API_KEY
     }
     
     data = {"contents": contents}
