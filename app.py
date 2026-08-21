@@ -6,7 +6,8 @@ import urllib.error
 st.set_page_config(page_title="Yapay Zeka Asistanım", page_icon="🤖")
 st.title("🤖 Benim Yapay Zeka Asistanım")
 
-API_KEY = "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"
+# Anahtarı GİZLİ KASADAN (Secrets) alıyoruz
+API_KEY = st.secrets["HF_KEY"]
 URL = "https://router.huggingface.co/v1/chat/completions"
 
 if "messages" not in st.session_state:
@@ -29,7 +30,6 @@ if prompt := st.chat_input("Yapay zekaya bir şeyler yaz..."):
         "User-Agent": "Mozilla/5.0"
     }
     
-    # Hugging Face güncel Llama 3.1 modeli
     data = {
         "model": "meta-llama/Llama-3.1-8B-Instruct",
         "messages": messages,
