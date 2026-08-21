@@ -5,7 +5,6 @@ import json
 st.set_page_config(page_title="Yapay Zeka Asistanım", page_icon="🤖")
 st.title("🤖 Benim Yapay Zeka Asistanım")
 
-# Aldığın Groq API anahtarın
 API_KEY = "Gsk_vldacf84wfuN97TvLgdFWGdyb3FYRhKpgQZc0B9u5hBXfcwVRMrF"
 URL = "https://api.groq.com/openai/v1/chat/completions"
 
@@ -21,12 +20,13 @@ if prompt := st.chat_input("Yapay zekaya bir şeyler yaz..."):
     with st.chat_message("user"):
         st.markdown(prompt)
 
-    # Groq mesaj formatı
     messages = [{"role": m["role"], "content": m["content"]} for m in st.session_state.messages]
     
+    # Güvenlik duvarını aşmak için User-Agent eklendi
     headers = {
         "Content-Type": "application/json",
-        "Authorization": f"Bearer {API_KEY}"
+        "Authorization": f"Bearer {API_KEY}",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
     }
     
     data = {
