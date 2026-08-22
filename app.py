@@ -5,7 +5,7 @@ import streamlit as st
 
 st.set_page_config(page_title="E-Bot Yapay Zeka", page_icon="🤖")
 
-# CSS: Mobilde zoom engelleme ve profil ikonlarını tamamen gizleme (Normal chat düzeni korunur)
+# CSS: Mobilde zoom engelleme ve profil ikonlarını tamamen gizleme
 st.markdown(
     """
     <style>
@@ -78,5 +78,5 @@ if prompt := st.chat_input("E-Bot'a bir şeyler yaz..."):
     error_detail = e.read().decode("utf-8")
     st.error(f"HTTP Hatası {e.code}: {error_detail}")
   except Exception as e:
-    st.error(f5"Hata oluştu: {e}")
+    st.error(f"Hata oluştu: {e}")
       
