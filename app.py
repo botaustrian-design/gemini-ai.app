@@ -5,34 +5,67 @@ import streamlit as st
 
 st.set_page_config(page_title="E-Bot Asistan", page_icon="⚡")
 
-# Profesyonel görünüm için tüm Streamlit kalıntılarını ve ikonları gizleyen CSS
+# Modern tasarım, zoom engelleme, profil gizleme ve sağ alttaki tüm simgeleri yok eden CSS
 st.markdown(
     """
     <style>
-    /* 1. Üstteki Streamlit menü, Fork ve GitHub buton çubuğunu tamamen gizle */
-    header {visibility: hidden !important;}
+    /* 1. Üst menü, rozetler ve sağ alttaki tüm Streamlit simgelerini (yeşil ikon ve kırmızı taç) tamamen gizle */
+    header { visibility: hidden !important; }
+    footer { visibility: hidden !important; }
+    #MainMenu { visibility: hidden !important; }
+    div[data-testid="stStatusWidget"] { display: none !important; }
+    .viewerBadge_container, [class*="viewerBadge"] { display: none !important; }
+    div.builtWith { display: none !important; }
     
-    /* 2. Alttaki "Hosted with Streamlit" rozetini ve logoları tamamen gizle */
-    footer {visibility: hidden !important;}
-    .viewerBadge_container__1QSob {display: none !important;}
-    
-    /* 3. Mobilde inputa tıklayınca ekranın zoom yapmasını engelle */
+    /* 2. Mobilde inputa tıklayınca zoom yapmasını engelle (16px kuralı) */
     input, textarea, [data-baseweb="base-input"] {
         font-size: 16px !important;
     }
     
-    /* 4. Sohbet içerisindeki profil ikonlarını tamamen ortadan kaldır */
+    /* 3. Sohbet içerisindeki tüm profil ikonlarını ortadan kaldır */
     [data-testid="stChatMessageAvatar"], 
     [data-testid="stChatMessageAvatarUser"], 
     [data-testid="stChatMessageAvatarAssistant"] {
         display: none !important;
     }
+    
+    /* 4. Modern ve şık başlık tasarımı */
+    .custom-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 20px;
+    }
+    .custom-logo {
+        width: 42px;
+        height: 42px;
+        background: linear-gradient(135deg, #6366f1, #a855f7);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        color: white;
+        box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+    .custom-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: #ffffff;
+        margin: 0;
+        letter-spacing: -0.5px;
+    }
     </style>
+    
+    <div class="custom-header">
+        <div class="custom-logo">⚡</div>
+        <h2 class="custom-title">E-Bot Asistan</h2>
+    </div>
 """,
     unsafe_allow_html=True,
 )
-
-st.title("E-Bot Asistan")
 
 URL = "https://router.huggingface.co/v1/chat/completions"
 
