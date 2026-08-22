@@ -2,24 +2,25 @@ import json
 import urllib.error
 import urllib.request
 import streamlit as st
-import streamlit.components.v1 as components
 
 st.set_page_config(page_title="E-Bot Asistan", page_icon="⚡")
 
-# 1. CSS ile üst menüleri, footer'ı ve profil ikonlarını gizleme
+# Güvenli CSS: Simgeleri ve üst menüyü gizler, beyaz sayfa hatası yaratmaz
 st.markdown(
     """
     <style>
-    header { visibility: hidden !important; display: none !important; }
-    footer { visibility: hidden !important; display: none !important; }
-    #MainMenu { visibility: hidden !important; display: none !important; }
+    /* Streamlit üst menü ve footer gizleme */
+    header { visibility: hidden !important; }
+    footer { visibility: hidden !important; }
+    #MainMenu { visibility: hidden !important; }
+    .viewerBadge_container { display: none !important; }
     
     /* Mobilde inputa tıklayınca zoom engelleme (16px) */
     input, textarea, [data-baseweb="base-input"] {
         font-size: 16px !important;
     }
     
-    /* Profil ikonlarını tamamen gizleme */
+    /* Sohbet içi profil ikonlarını tamamen gizleme */
     [data-testid="stChatMessageAvatar"], 
     [data-testid="stChatMessageAvatarUser"], 
     [data-testid="stChatMessageAvatarAssistant"] {
@@ -62,36 +63,6 @@ st.markdown(
     </div>
 """,
     unsafe_allow_html=True,
-)
-
-# 2. JavaScript ile Sağ Alttaki Rozetleri Yok Etme ve Klavye Kapatma (Blur)
-components.html(
-    """
-    <script>
-    const observer = new MutationObserver((mutations, obs) => {
-        const doc = window.parent.document;
-        
-        // Sağ alttaki tüm Streamlit rozetlerini ve yeşil/kırmızı ikonları DOM'dan tamamen sök
-        const badges = doc.querySelectorAll('[class*="viewerBadge"], [data-testid="stStatusWidget"], footer');
-        badges.forEach(b => b.remove());
-        
-        // Mesaj yazılıp Enter'a basıldığında klavyeyi kapatmak için focus'u düşür (blur)
-        const inputs = doc.querySelectorAll('input, textarea');
-        inputs.forEach(input => {
-            if (!input.dataset.listenerAdded) {
-                input.dataset.listenerAdded = 'true';
-                input.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter') {
-                        setTimeout(() => { this.blur(); }, 150);
-                    }
-                });
-            }
-        });
-    });
-    observer.observe(window.parent.document.body, { childList: true, subtree: true });
-    </script>
-    """,
-    height=0,
 )
 
 URL = "https://router.huggingface.co/v1/chat/completions"
