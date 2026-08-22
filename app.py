@@ -5,7 +5,7 @@ import streamlit as st
 
 st.set_page_config(page_title="E-Bot Asistan", page_icon="⚡")
 
-# --- 1. SESSION STATE (Oturum Hafızası) BAŞLANGICI ---
+# --- 1. SESSION STATE (Oturum Hafızası) ---
 if "page" not in st.session_state:
   st.session_state.page = "chat"
 if "theme" not in st.session_state:
@@ -15,7 +15,7 @@ if "language" not in st.session_state:
 if "messages" not in st.session_state:
   st.session_state.messages = []
 
-# --- 2. TEMA VE RENK MODU CSS AYARLARI ---
+# --- 2. TEMA VE RENK PALETLERİ ---
 theme_styles = {
     "Koyu Mod": {
         "bg": "#0e1117",
@@ -47,10 +47,21 @@ current_theme = theme_styles.get(
     st.session_state.theme, theme_styles["Koyu Mod"]
 )
 
+# --- 3. DİNAMİK CSS (Temaları ve Stilleri Uygulama) ---
 st.markdown(
     f"""
     <style>
-    /* Genel Stiller ve Streamlit Kalıntılarını Gizleme */
+    /* Ana Sayfa Arka Plan ve Metin Renkleri (Tema Desteği) */
+    .stApp {{
+        background-color: {current_theme['bg']} !important;
+        color: {current_theme['text']} !important;
+    }}
+    
+    h1, h2, h3, h4, h5, h6, p, span, label {{
+        color: {current_theme['text']} !important;
+    }}
+    
+    /* Streamlit Üst Menü ve Rozetleri Gizleme */
     header {{ visibility: hidden !important; }}
     footer {{ visibility: hidden !important; }}
     #MainMenu {{ visibility: hidden !important; }}
@@ -58,6 +69,8 @@ st.markdown(
     /* Mobil Zoom Engelleme */
     input, textarea, [data-baseweb="base-input"] {{
         font-size: 16px !important;
+        background-color: {current_theme['card']} !important;
+        color: {current_theme['text']} !important;
     }}
     
     /* Profil İkonlarını Gizleme */
@@ -107,7 +120,7 @@ st.markdown(
 
 URL = "https://router.huggingface.co/v1/chat/completions"
 
-# --- 3. SAYFA 1: ANA SOHBET EKRANI ---
+# --- 4. SAYFA 1: ANA SOHBET EKRANI ---
 if st.session_state.page == "chat":
   col1, col2 = st.columns([6, 1])
   with col1:
@@ -142,7 +155,7 @@ if st.session_state.page == "chat":
     with st.chat_message("user"):
       st.markdown(prompt)
 
-    # Seçilen dile göre sistem komutu
+    # Seçilen dile göre yapay zeka promptu
     lang_instructions = {
         "Türkçe 🇹🇷": "Türkçe",
         "Almanca 🇩🇪": "Almanca (German)",
@@ -203,7 +216,7 @@ if st.session_state.page == "chat":
     except Exception as e:
       st.error(f"Hata oluştu: {e}")
 
-# --- 4. SAYFA 2: AYARLAR MENÜSÜ ---
+# --- 5. SAYFA 2: AYARLAR MENÜSÜ ---
 elif st.session_state.page == "settings":
   st.title("⚙️ Ayarlar")
   st.write("Uygulama görünümünü ve dil tercihlerini buradan yönetebilirsin.")
@@ -221,7 +234,7 @@ elif st.session_state.page == "settings":
     st.session_state.page = "chat"
     st.rerun()
 
-# --- 5. SAYFA 3: RENK MODLARI SAYFASI ---
+# --- 6. SAYFA 3: RENK MODLARI SAYFASI ---
 elif st.session_state.page == "themes":
   st.title("🎨 Renk Modları")
   st.write("Uygulamanın tema rengini seç:")
@@ -240,7 +253,7 @@ elif st.session_state.page == "themes":
     st.session_state.page = "settings"
     st.rerun()
 
-# --- 6. SAYFA 4: DİLLER SAYFASI ---
+# --- 7. SAYFA 4: DİLLER SAYFASI ---
 elif st.session_state.page == "languages":
   st.title("🌍 Dil Seçimi")
   st.write("E-Bot'un konuşmasını istediğin dili seç:")
@@ -269,4 +282,4 @@ elif st.session_state.page == "languages":
   if st.button("⬅️ Ayarlara Dön", use_container_width=True):
     st.session_state.page = "settings"
     st.rerun()
-    
+
