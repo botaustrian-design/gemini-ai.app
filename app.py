@@ -5,7 +5,7 @@ import streamlit as st
 
 st.set_page_config(page_title="E-Bot Yapay Zeka", page_icon="🤖")
 
-# CSS: Mobilde zoom engelleme, profilleri gizleme, kullanıcıyı sağa botu sola hizalama
+# CSS: Mobilde zoom engelleme ve profil ikonlarını tamamen gizleme (Normal chat düzeni korunur)
 st.markdown(
     """
     <style>
@@ -14,20 +14,11 @@ st.markdown(
         font-size: 16px !important;
     }
     
-    /* 2. Tüm profil (avatar) ikonlarını tamamen gizler */
-    [data-testid="stChatMessageAvatar"] {
+    /* 2. Kırmızı ve turuncu dahil tüm profil (avatar) ikonlarını tamamen gizler */
+    [data-testid="stChatMessageAvatar"], 
+    [data-testid="stChatMessageAvatarUser"], 
+    [data-testid="stChatMessageAvatarAssistant"] {
         display: none !important;
-    }
-    
-    /* 3. Kullanıcı mesajlarını sağa hizalar */
-    [data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]) {
-        flex-direction: row-reverse;
-        text-align: right;
-    }
-    
-    /* 4. Kullanıcı mesaj içeriğinin metin hizalamasını sağa sabitler */
-    [data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]) [data-testid="stChatMessageContent"] {
-        text-align: right;
     }
     </style>
 """,
@@ -87,5 +78,5 @@ if prompt := st.chat_input("E-Bot'a bir şeyler yaz..."):
     error_detail = e.read().decode("utf-8")
     st.error(f"HTTP Hatası {e.code}: {error_detail}")
   except Exception as e:
-    st.error(f"Hata oluştu: {e}")
+    st.error(f5"Hata oluştu: {e}")
       
