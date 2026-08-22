@@ -2,34 +2,31 @@ import json
 import urllib.error
 import urllib.request
 import streamlit as st
+import streamlit.components.v1 as components
 
 st.set_page_config(page_title="E-Bot Asistan", page_icon="⚡")
 
-# Modern tasarım, zoom engelleme, profil gizleme ve sağ alttaki tüm simgeleri yok eden CSS
+# 1. CSS ile üst menüleri, footer'ı ve profil ikonlarını gizleme
 st.markdown(
     """
     <style>
-    /* 1. Üst menü, rozetler ve sağ alttaki tüm Streamlit simgelerini (yeşil ikon ve kırmızı taç) tamamen gizle */
-    header { visibility: hidden !important; }
-    footer { visibility: hidden !important; }
-    #MainMenu { visibility: hidden !important; }
-    div[data-testid="stStatusWidget"] { display: none !important; }
-    .viewerBadge_container, [class*="viewerBadge"] { display: none !important; }
-    div.builtWith { display: none !important; }
+    header { visibility: hidden !important; display: none !important; }
+    footer { visibility: hidden !important; display: none !important; }
+    #MainMenu { visibility: hidden !important; display: none !important; }
     
-    /* 2. Mobilde inputa tıklayınca zoom yapmasını engelle (16px kuralı) */
+    /* Mobilde inputa tıklayınca zoom engelleme (16px) */
     input, textarea, [data-baseweb="base-input"] {
         font-size: 16px !important;
     }
     
-    /* 3. Sohbet içerisindeki tüm profil ikonlarını ortadan kaldır */
+    /* Profil ikonlarını tamamen gizleme */
     [data-testid="stChatMessageAvatar"], 
     [data-testid="stChatMessageAvatarUser"], 
     [data-testid="stChatMessageAvatarAssistant"] {
         display: none !important;
     }
     
-    /* 4. Modern ve şık başlık tasarımı */
+    /* Şık Logo ve Başlık Tasarımı */
     .custom-header {
         display: flex;
         align-items: center;
@@ -65,6 +62,36 @@ st.markdown(
     </div>
 """,
     unsafe_allow_html=True,
+)
+
+# 2. JavaScript ile Sağ Alttaki Rozetleri Yok Etme ve Klavye Kapatma (Blur)
+components.html(
+    """
+    <script>
+    const observer = new MutationObserver((mutations, obs) => {
+        const doc = window.parent.document;
+        
+        // Sağ alttaki tüm Streamlit rozetlerini ve yeşil/kırmızı ikonları DOM'dan tamamen sök
+        const badges = doc.querySelectorAll('[class*="viewerBadge"], [data-testid="stStatusWidget"], footer');
+        badges.forEach(b => b.remove());
+        
+        // Mesaj yazılıp Enter'a basıldığında klavyeyi kapatmak için focus'u düşür (blur)
+        const inputs = doc.querySelectorAll('input, textarea');
+        inputs.forEach(input => {
+            if (!input.dataset.listenerAdded) {
+                input.dataset.listenerAdded = 'true';
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        setTimeout(() => { this.blur(); }, 150);
+                    }
+                });
+            }
+        });
+    });
+    observer.observe(window.parent.document.body, { childList: true, subtree: true });
+    </script>
+    """,
+    height=0,
 )
 
 URL = "https://router.huggingface.co/v1/chat/completions"
