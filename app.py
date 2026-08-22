@@ -105,6 +105,8 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+URL = "https://router.huggingface.co/v1/chat/completions"
+
 # --- 3. SAYFA 1: ANA SOHBET EKRANI ---
 if st.session_state.page == "chat":
   col1, col2 = st.columns([6, 1])
@@ -126,8 +128,8 @@ if st.session_state.page == "chat":
       st.rerun()
 
   st.markdown(
-      "<hr style='margin-top:5px; margin-bottom:20px; border-color:rgba(255,255,255,0.1);'>"
-      inspect,
+      "<hr style='margin-top:5px; margin-bottom:20px;"
+      " border-color:rgba(255,255,255,0.1);'>",
       unsafe_allow_html=True,
   )
 
@@ -183,9 +185,7 @@ if st.session_state.page == "chat":
     }
 
     req = urllib.request.Request(
-        URL := "https://router.huggingface.co/v1/chat/completions",
-        data=json.dumps(data).encode("utf-8"),
-        headers=headers,
+        URL, data=json.dumps(data).encode("utf-8"), headers=headers
     )
 
     try:
@@ -269,4 +269,4 @@ elif st.session_state.page == "languages":
   if st.button("⬅️ Ayarlara Dön", use_container_width=True):
     st.session_state.page = "settings"
     st.rerun()
-      
+    
