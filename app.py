@@ -3,18 +3,25 @@ import urllib.error
 import urllib.request
 import streamlit as st
 
-st.set_page_config(page_title="E-Bot Yapay Zeka", page_icon="🤖")
+st.set_page_config(page_title="E-Bot Asistan", page_icon="⚡")
 
-# CSS: Mobilde zoom engelleme ve profil ikonlarını tamamen gizleme
+# Profesyonel görünüm için tüm Streamlit kalıntılarını ve ikonları gizleyen CSS
 st.markdown(
     """
     <style>
-    /* 1. Mobilde inputa tıklayınca zoom yapmasını engeller */
+    /* 1. Üstteki Streamlit menü, Fork ve GitHub buton çubuğunu tamamen gizle */
+    header {visibility: hidden !important;}
+    
+    /* 2. Alttaki "Hosted with Streamlit" rozetini ve logoları tamamen gizle */
+    footer {visibility: hidden !important;}
+    .viewerBadge_container__1QSob {display: none !important;}
+    
+    /* 3. Mobilde inputa tıklayınca ekranın zoom yapmasını engelle */
     input, textarea, [data-baseweb="base-input"] {
         font-size: 16px !important;
     }
     
-    /* 2. Kırmızı ve turuncu dahil tüm profil (avatar) ikonlarını tamamen gizler */
+    /* 4. Sohbet içerisindeki profil ikonlarını tamamen ortadan kaldır */
     [data-testid="stChatMessageAvatar"], 
     [data-testid="stChatMessageAvatarUser"], 
     [data-testid="stChatMessageAvatarAssistant"] {
@@ -25,7 +32,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-st.title("🤖 E-Bot Asistan")
+st.title("E-Bot Asistan")
 
 URL = "https://router.huggingface.co/v1/chat/completions"
 
@@ -54,7 +61,6 @@ if prompt := st.chat_input("E-Bot'a bir şeyler yaz..."):
       for m in st.session_state.messages
   ]
 
-  # API anahtarı kodda yer almıyor, doğrudan Streamlit secrets'tan okunuyor
   headers = {
       "Content-Type": "application/json",
       "Authorization": f"Bearer {st.secrets['HF_KEY']}",
