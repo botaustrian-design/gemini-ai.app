@@ -27,8 +27,6 @@ st.markdown(
 
 st.title("🤖 E-Bot Asistan")
 
-# Anahtarı GİZLİ KASADAN (Secrets) alıyoruz
-API_KEY = st.secrets["HF_KEY"]
 URL = "https://router.huggingface.co/v1/chat/completions"
 
 if "messages" not in st.session_state:
@@ -43,21 +41,30 @@ if prompt := st.chat_input("E-Bot'a bir şeyler yaz..."):
   with st.chat_message("user"):
     st.markdown(prompt)
 
-  messages = [
+  system_prompt = {
+      "role": "system",
+      "content": (
+          "Sen E-Bot adında, kullanıcıya her konuda yardımcı olan, akıllı,"
+          " samimi ve net bir yapay zeka asistanısın."
+      ),
+  }
+
+  messages = [system_prompt] + [
       {"role": m["role"], "content": m["content"]}
       for m in st.session_state.messages
   ]
 
+  # API anahtarı kodda yer almıyor, doğrudan Streamlit secrets'tan okunuyor
   headers = {
       "Content-Type": "application/json",
-      "Authorization": f"Bearer {API_KEY}",
+      "Authorization": f"Bearer {st.secrets['HF_KEY']}",
       "User-Agent": "Mozilla/5.0",
   }
 
   data = {
       "model": "meta-llama/Llama-3.1-8B-Instruct",
       "messages": messages,
-      "max_tokens": 500,
+      "max_tokens": 800,
   }
 
   req = urllib.request.Request(
